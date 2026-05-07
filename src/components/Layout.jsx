@@ -3,16 +3,12 @@ import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar.jsx';
 import Header from './Header.jsx';
 
-// The top-level chrome for every authenticated page. Holds the sidebar
-// open/closed state and renders the routed page into <Outlet />.
 export default function Layout() {
-  // Desktop: sidebar is persistent but can collapse to icon-only.
   const [collapsed, setCollapsed] = useState(false);
-  // Mobile: sidebar is hidden by default and opens as an overlay drawer.
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <div className="flex h-full w-full bg-slate-50">
+    <div className="flex h-full w-full" style={{ background: 'var(--bg-primary)' }}>
       <Sidebar
         collapsed={collapsed}
         mobileOpen={mobileOpen}

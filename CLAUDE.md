@@ -1,139 +1,143 @@
-# Dashboard Starter Kit — Guide for Claude Code
+# Obsidian Dashboard — Guide for Claude Code
 
-Welcome! This project is a **starter dashboard**. It's intentionally minimal so the owner can customize it into their own product using Claude Code (you).
+## What this app does
 
----
-
-## 🧭 First-interaction behavior (important)
-
-When a user first opens this project and asks anything open-ended like "hey", "what can you do?", "help me get started", or doesn't know where to begin — proactively offer them these four paths. Ask which one they'd like to start with.
-
-```
-Welcome to your new dashboard! I can help you with any of the following:
-
-  🎨  1. Brand the dashboard    — colors, fonts, logo, site title
-  🔐  2. Connect Clerk for auth — let users sign in
-  🗄️  3. Connect Supabase       — plug in your database
-  🛠️  4. Build your first feature — add a new page end-to-end
-
-Which would you like to do first?
-```
-
-Whichever they pick, follow the corresponding playbook below. After finishing one, offer the next.
-
-> If the user is already asking something specific, just help them directly — don't force the menu.
+Obsidian Dashboard es el sistema operativo digital de Obsidian Systems. Centraliza la gestión de contenido, métricas, clientes, ventas, operaciones y curso en una sola app — reemplazando Airtable, Skool y cualquier otra suscripción.
 
 ---
 
-## 🎨 1. Brand the dashboard
+## Who uses it
 
-**Files to touch:**
-- [src/index.css](src/index.css) — change the `--accent` and `--accent-foreground` CSS variables (RGB triplets).
-- [tailwind.config.js](tailwind.config.js) — swap the `fontFamily.sans` stack.
-- [index.html](index.html) — update the `<title>` and favicon.
-- [src/components/Sidebar.jsx](src/components/Sidebar.jsx) — replace the placeholder logo mark ("B") and the brand name.
-- [src/components/Header.jsx](src/components/Header.jsx) — optional avatar / search tweaks.
+| Role | Access |
+|------|--------|
+| **Admin (Fran)** | Todo. Control total del sistema, todos los módulos, datos de todos los clientes. |
+| **Equipo de Fran** | Limitado por área. Ven los módulos de su función dentro del negocio de Fran o de los clientes de Fran. |
+| **Cliente** | Ve su propio negocio (métricas, pipeline, contenido) + módulos del programa/curso. |
+| **Equipo del cliente** | Limitado por área dentro del negocio de su cliente. |
 
-**Typical workflow:**
-1. Ask the user for: brand name, primary color (hex), and whether they have a logo file or URL.
-2. Convert the hex to an `R G B` triplet (space-separated) and paste it into `--accent` in `src/index.css`.
-3. Update the title, favicon, sidebar logo, and brand name.
-4. If they want a Google Font, add the `<link>` to [index.html](index.html) and the family name to `tailwind.config.js`.
+No hay vista pública. Todos los usuarios están autenticados.
 
 ---
 
-## 🔐 2. Connect Clerk for auth
+## Tech stack
 
-**Install:**
-```bash
-npm install @clerk/clerk-react
-```
-
-**Env:** Add `VITE_CLERK_PUBLISHABLE_KEY` from the Clerk dashboard to `.env` (template in [.env.example](.env.example)).
-
-**Files to touch (TODO markers already in place):**
-- [src/main.jsx](src/main.jsx) — wrap `<App />` in `<ClerkProvider>`.
-- [src/App.jsx](src/App.jsx) — wrap routes in `<SignedIn>` / `<SignedOut>` + `<RedirectToSignIn />`.
-- [src/components/Header.jsx](src/components/Header.jsx) — replace the placeholder avatar with `<UserButton />`.
-
-After wiring: restart dev server, sign in once to verify the flow.
+| Layer | Tech |
+|-------|------|
+| Frontend | React 18 + Vite 5 |
+| Styling | Tailwind CSS 3 + CSS variables para branding |
+| Routing | React Router 6 |
+| Icons | Lucide React |
+| Backend | Express 4 (Node.js, ESM) |
+| Auth | Clerk (`@clerk/clerk-react`) |
+| Database | Supabase (`@supabase/supabase-js`) |
+| AI | Claude API (Anthropic SDK) — para Fran Virtual |
+| External APIs | Instagram Graph API, Stripe, YouTube Analytics, Telegram |
 
 ---
 
-## 🗄️ 3. Connect Supabase
+## Brand
 
-**Install:**
-```bash
-npm install @supabase/supabase-js
-```
-
-**Env:** Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` to `.env`.
-
-**Files to touch (TODO markers already in place):**
-- [src/lib/supabase.js](src/lib/supabase.js) — initialize the client (the file has the exact snippet in a comment).
-- [server/routes/members.js](server/routes/members.js), [server/routes/content.js](server/routes/content.js), [server/routes/analytics.js](server/routes/analytics.js) — swap the placeholder `res.json({ data: [] })` lines for real queries. (Use the service key on the server; never expose it to the frontend.)
-
-**Workflow tip:** Help the user create the first table in Supabase (e.g., `members`), generate the SQL, then replace the GET handler in `server/routes/members.js` with a real query so the Members page lights up.
+- **Nombre:** Obsidian Systems
+- **Color primario:** Negro/slate oscuro — `--accent: 15 23 42` (slate-900)
+- **Foreground:** Blanco — `--accent-foreground: 255 255 255`
+- **Font:** System stack (ui-sans-serif, system-ui). Si se agrega custom: Inter o Geist.
+- **Tono visual:** Limpio, oscuro, profesional. Sin emojis en la UI. Minimalista.
+- **Logo:** "O" o marca Obsidian (placeholder "B" en Sidebar debe cambiar)
 
 ---
 
-## 🛠️ 4. Build your first feature
+## Modules (priority order)
 
-A complete new page follows this pattern. Walk through it together.
+Estos son los 7 módulos que componen el dashboard. Se construyen en este orden:
 
-1. **New page** → `src/pages/YourFeature.jsx` (copy [src/pages/Members.jsx](src/pages/Members.jsx) as a template).
-2. **Nav entry** → add an item to `NAV_ITEMS` in [src/components/Sidebar.jsx](src/components/Sidebar.jsx). Pick an icon from [lucide.dev/icons](https://lucide.dev/icons).
-3. **Route** → add a `<Route>` to [src/App.jsx](src/App.jsx).
-4. **API** → create `server/routes/yourFeature.js` and mount it in [server/index.js](server/index.js) (`app.use('/api/your-feature', router)`).
-5. **Data** → if using Supabase, add a table and wire up the GET/POST handlers.
-6. **Done** → `npm run dev`, click your new nav item, confirm the page renders and `/api/your-feature` responds.
+1. **Content Calendar** — Calendario de contenido con estados (idea → draft → scheduled → published). Vista semanal/mensual. Drag & drop para mover contenido entre días.
+
+2. **Content Metrics** — Dashboard de métricas de Instagram (reach, saves, shares, likes, comments, watch time). Comparación semanal. Semáforo (verde/amarillo/rojo). Indicador de momentum. Powered by Instagram Graph API + Content Analyzer agent.
+
+3. **Skool + Course** — Hosting de programa/curso para clientes. Módulos, lecciones (video + texto), progreso por cliente. Reemplaza Skool. Accesible por rol Cliente.
+
+4. **Operations** — Checklists de implementación, procesos documentados (SOPs), estados por cliente. Vista tipo kanban o lista con progreso %.
+
+5. **Revenue** — Métricas de facturación. Stripe integration. MRR, churn, LTV, revenue por cliente. Gráficos de tendencia.
+
+6. **CRM** — Pipeline de ventas (leads → qualified → call → closed/lost). Directorio de miembros/clientes con detalle. Engagement tracking.
+
+7. **Fran Virtual** — Chat de consultor integrado (estilo digitalcoffee.ai). Motor Claude API con `agents/consultant.md` como system prompt. Lee `context/knowledge/` y `context/output/` como base de conocimiento. Aprende de cada conversación (guarda historial, preferencias, contexto).
 
 ---
 
-## 🗂️ Project structure
+## File structure
 
 ```
 .
 ├── CLAUDE.md                # ← you are here
-├── README.md                # Human quick-start
-├── package.json             # One manifest runs both frontend + server
-├── .env.example             # Copy to .env and fill in
-├── vite.config.js           # Vite dev server; proxies /api → Express
-├── tailwind.config.js       # Tailwind + `accent` color token
+├── package.json             # One manifest runs frontend + server
+├── .env                     # Keys (never commit)
+├── .env.example             # Template
+├── vite.config.js           # Vite + proxy /api → Express
+├── tailwind.config.js       # Tailwind + accent color token
 ├── index.html               # HTML shell
 ├── src/                     # React frontend
-│   ├── main.jsx             # React entry (Clerk goes here)
-│   ├── App.jsx              # Routes (protected routes go here)
+│   ├── main.jsx             # React entry (ClerkProvider)
+│   ├── App.jsx              # Routes (protected by Clerk)
 │   ├── index.css            # Tailwind directives + brand tokens
-│   ├── lib/supabase.js      # Supabase client stub
+│   ├── lib/
+│   │   └── supabase.js      # Supabase client
 │   ├── components/          # Layout, Sidebar, Header, reusable UI
-│   └── pages/               # Dashboard, Members, Pipeline, Content, Analytics, Agents, Settings
+│   └── pages/               # One file per module/page
 └── server/                  # Express API
     ├── index.js             # App + middleware + route mounts
-    └── routes/              # health, members, content, analytics
+    └── routes/              # One file per API domain
 ```
-
-## ⚙️ Commands
-
-| Command          | What it does                                                  |
-| ---------------- | ------------------------------------------------------------- |
-| `npm install`    | Install dependencies                                          |
-| `npm run dev`    | Run Vite (frontend) and Express (API) together                |
-| `npm run build`  | Build the frontend to `dist/`                                 |
-| `npm start`      | Run the Express server in production (serves `dist/`)         |
-
-Default ports: frontend **5173**, API **3001**. Change `PORT` in `.env` to move the API.
 
 ---
 
-## ⚠️ Where NOT to delete
+## Conventions
 
-Search the codebase for `TODO:` — each marker is an intentional integration seam (Clerk, Supabase, branding). Don't strip them out until the corresponding feature is fully wired up; they're your roadmap.
+- **Components:** PascalCase, `.jsx` extension. One component per file.
+- **Pages:** PascalCase, in `src/pages/`. Each page is a route target.
+- **Routes (API):** kebab-case files in `server/routes/`. Mounted at `/api/<resource>`.
+- **State:** Local state with `useState`/`useEffect`. No Redux. Fetch data from API routes.
+- **Styling:** Tailwind utility classes. No inline styles. Use `accent` color token for brand elements.
+- **Imports:** Named exports for components. Default export for pages.
+- **No TypeScript.** Plain JSX.
+- **No comments** unless the WHY is non-obvious.
+
+---
+
+## Rules
+
+1. **Español argentino** en toda comunicación con el usuario. Directo, sin fluff.
+2. **Incremental.** Cambios chicos. Después de cada cambio, indicar cómo verificar.
+3. **Mobile-first responsive.** Sidebar collapsa en mobile. Cards se stackean.
+4. **Role-based access.** Cada módulo debe respetar los 4 roles. Clerk maneja auth, Supabase RLS maneja permisos por row.
+5. **API-first.** Los datos siempre pasan por `/api/` routes. El frontend nunca habla directo a Supabase.
+6. **No inventar datos.** Si no hay data real, mostrar empty state con CTA para conectar la fuente.
+7. **No emojis en la UI.** El dashboard es profesional y limpio.
+8. **Preservar TODO markers** hasta que el feature esté completamente implementado.
+
+---
+
+## Commands
+
+| Command | What it does |
+|---------|-------------|
+| `npm install` | Install dependencies |
+| `npm run dev` | Run Vite (frontend :5173) and Express (API :3001) together |
+| `npm run build` | Build frontend to `dist/` |
+| `npm start` | Run Express in production (serves `dist/`) |
 
 ---
 
 ## Working style
 
-- Keep changes small and incremental — the user may not read diffs.
-- After any meaningful change, suggest `npm run dev` and tell them exactly what to click or curl to verify.
-- Explain new concepts plainly (the user may be non-technical).
+- Keep changes small — the user may not read diffs.
+- After any meaningful change, suggest `npm run dev` and explain exactly what to click or curl to verify.
+- When building a new module, follow this pattern:
+  1. Create page component in `src/pages/`
+  2. Add nav item to `Sidebar.jsx` (pick icon from lucide.dev/icons)
+  3. Add route to `App.jsx`
+  4. Create API route in `server/routes/`
+  5. Mount route in `server/index.js`
+  6. Wire frontend to fetch from API
+  7. Test with `npm run dev`

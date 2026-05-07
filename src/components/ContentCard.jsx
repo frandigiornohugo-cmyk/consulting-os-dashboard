@@ -1,13 +1,11 @@
-// Generic card wrapper — use it for sections, content tiles, or data panels.
 export default function ContentCard({ title, action, children, className = '' }) {
   return (
-    <section
-      className={`rounded-lg border border-slate-200 bg-white shadow-sm ${className}`}
-    >
+    <section className={`glass-card rounded-xl ${className}`}>
       {(title || action) && (
-        <header className="flex items-center justify-between border-b border-slate-200 px-5 py-4">
+        <header className="flex items-center justify-between px-5 py-4"
+                style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
           {title && (
-            <h2 className="text-sm font-semibold tracking-tight text-slate-900">
+            <h2 className="text-sm font-semibold tracking-tight text-neutral-300">
               {title}
             </h2>
           )}
