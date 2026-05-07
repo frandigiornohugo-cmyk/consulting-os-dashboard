@@ -1,4 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom';
+import { useUser, useClerk } from '@clerk/clerk-react';
 import {
   Home,
   CalendarDays,
@@ -32,6 +33,10 @@ const NAV_BOTTOM = [
 ];
 
 export default function Sidebar({ collapsed, mobileOpen, onCloseMobile }) {
+  const { user } = useUser();
+  const { signOut } = useClerk();
+  const firstName = user?.firstName || 'Usuario';
+
   return (
     <>
       {mobileOpen && (
@@ -78,7 +83,7 @@ export default function Sidebar({ collapsed, mobileOpen, onCloseMobile }) {
         {!collapsed && (
           <div className="px-5 pt-4 pb-5">
             <h2 className="text-2xl font-bold metallic-text leading-tight">
-              Bienvenido,<br />Francisco
+              Bienvenido,<br />{firstName}
             </h2>
             <p className="mt-1 text-xs text-neutral-600">
               Ultimo acceso: {new Date().toLocaleDateString('es-AR', { day: 'numeric', month: 'short' })}
@@ -141,6 +146,7 @@ export default function Sidebar({ collapsed, mobileOpen, onCloseMobile }) {
             ))}
             <li>
               <button
+                onClick={() => signOut()}
                 className="nav-item flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-neutral-600 hover:text-neutral-400 transition-all duration-150"
               >
                 <LogOut size={16} className="flex-none" />

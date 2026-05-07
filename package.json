@@ -13,6 +13,9 @@
     "start": "node server/index.js"
   },
   "dependencies": {
+    "@clerk/clerk-react": "^5.61.6",
+    "@clerk/themes": "^2.4.57",
+    "@supabase/supabase-js": "^2.105.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",

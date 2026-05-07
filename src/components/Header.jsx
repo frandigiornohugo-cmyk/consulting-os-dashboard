@@ -1,4 +1,5 @@
 import { Menu, PanelLeftClose } from 'lucide-react';
+import { UserButton } from '@clerk/clerk-react';
 
 export default function Header({ onToggleCollapse, onOpenMobile }) {
   return (
@@ -23,7 +24,14 @@ export default function Header({ onToggleCollapse, onOpenMobile }) {
       </button>
 
       <div className="ml-auto flex items-center gap-2">
-        {/* TODO: Clerk <UserButton /> */}
+        <UserButton
+          afterSignOutUrl="/"
+          appearance={{
+            elements: {
+              avatarBox: 'w-8 h-8',
+            },
+          }}
+        />
       </div>
     </header>
   );
