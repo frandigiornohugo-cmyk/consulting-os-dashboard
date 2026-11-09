@@ -8,6 +8,7 @@ import healthRouter from './routes/health.js';
 import membersRouter from './routes/members.js';
 import contentRouter from './routes/content.js';
 import analyticsRouter from './routes/analytics.js';
+import thumbnailsRouter from './routes/thumbnails.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -15,6 +16,8 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(cors());
+// Thumbnails carry base64 images, so it gets a bigger body limit before the global parser.
+app.use('/api/thumbnails', express.json({ limit: '40mb' }), thumbnailsRouter);
 app.use(express.json());
 
 // Health check — handy for deploys and uptime monitors.

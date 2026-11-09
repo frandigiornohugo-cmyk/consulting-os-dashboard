@@ -9,6 +9,7 @@ import Operations from './pages/Operations.jsx';
 import Revenue from './pages/Revenue.jsx';
 import CRM from './pages/CRM.jsx';
 import FranVirtual from './pages/FranVirtual.jsx';
+import Thumbnails from './pages/Thumbnails.jsx';
 import Members from './pages/Members.jsx';
 import MemberDetail from './pages/MemberDetail.jsx';
 import Settings from './pages/Settings.jsx';
@@ -21,6 +22,7 @@ export default function App() {
           <Route element={<Layout />}>
             <Route index element={<Dashboard />} />
             <Route path="content-calendar" element={<ContentCalendar />} />
+            <Route path="thumbnails" element={<Thumbnails />} />
             <Route path="metrics" element={<Metrics />} />
             <Route path="course" element={<Course />} />
             <Route path="operations" element={<Operations />} />

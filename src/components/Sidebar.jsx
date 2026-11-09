@@ -3,6 +3,7 @@ import { useUser, useClerk } from '@clerk/clerk-react';
 import {
   Home,
   CalendarDays,
+  Image,
   BarChart3,
   GraduationCap,
   ClipboardList,
@@ -19,6 +20,7 @@ import {
 const NAV_MAIN = [
   { to: '/', label: 'Home', icon: Home, end: true },
   { to: '/content-calendar', label: 'Contenido', icon: CalendarDays, chevron: true },
+  { to: '/thumbnails', label: 'Miniaturas', icon: Image, chevron: true },
   { to: '/operations', label: 'Operaciones', icon: ClipboardList, chevron: true },
   { to: '/crm', label: 'Ventas', icon: Contact, chevron: true },
   { to: '/revenue', label: 'Finanzas', icon: DollarSign, chevron: true },
