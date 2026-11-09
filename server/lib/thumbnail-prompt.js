@@ -3,7 +3,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const METHODOLOGY_PATH = path.join(__dirname, '..', '..', 'context', 'miniaturas', 'metodologia.md');
+const KNOWLEDGE_DIR = path.join(__dirname, '..', '..', 'estudio-miniaturas', 'conocimiento');
+const KNOWLEDGE_FILES = ['packaging.md', 'metodologia.md'];
 
 export const NICHES = {
   'marca-personal': 'Personal brand / client testimonial. Big expressive faces, genuine emotion, result-driven numeric headline.',
@@ -26,11 +27,10 @@ export const SPEC_FIELDS = [
 ];
 
 export async function loadMethodology() {
-  try {
-    return await fs.readFile(METHODOLOGY_PATH, 'utf8');
-  } catch {
-    return '';
-  }
+  const docs = await Promise.all(
+    KNOWLEDGE_FILES.map((f) => fs.readFile(path.join(KNOWLEDGE_DIR, f), 'utf8').catch(() => '')),
+  );
+  return docs.filter(Boolean).join('\n\n');
 }
 
 export async function buildAnalysisSystemPrompt() {
@@ -41,7 +41,7 @@ export async function buildAnalysisSystemPrompt() {
     'Describí solo la estructura visual: no describas la identidad de las personas de la referencia.',
     'Respondé SOLO un objeto JSON con estas claves (todas strings en español, concretas y medibles: posiciones, proporciones, colores en hex cuando se pueda):',
     SPEC_FIELDS.map((f) => `- ${f}`).join('\n'),
-    'Además incluí "resumen" (una línea) y "texto_detectado" (el texto exacto que aparece en la referencia).',
+    'Además incluí "resumen" (una línea), "texto_detectado" (el texto exacto de la referencia), "emocion" (la emoción que transmite) y "conteo_elementos" (número total de elementos y cuáles).',
     methodology ? `\nMetodología a respetar:\n${methodology}` : '',
   ].join('\n');
 }
@@ -77,6 +77,11 @@ export function buildGenerationPrompt({ spec = {}, niche, photos = [], title, su
     '',
     specLines.length ? 'VISUAL SPEC (from reference analysis)' : null,
     ...specLines,
+    '',
+    'PACKAGING',
+    '- Saturated, bright, natural but very vivid colors (strong reds, intense blues). Nothing washed out or grey.',
+    '- Maximum 3 to 5 visual elements in total (each face, title, subtitle, arrow, logo or object counts). Do not add anything not requested.',
+    '- One clear emotion, taken from the original expressions. Faces are the focal point.',
     '',
     'TEXT (render exactly, character by character, no extra words, no translation)',
     `- Main title: "${title}"`,

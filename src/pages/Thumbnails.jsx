@@ -293,7 +293,7 @@ export default function Thumbnails() {
                   value={p.dataUrl}
                   onChange={(v) => updatePhoto(i, { dataUrl: v })}
                   label={`Foto ${i + 1}`}
-                  hint="Frame del video, cara visible y nitida"
+                  hint="Frame con emocion clara (sorpresa, seriedad, intriga), cara nitida"
                   aspect="aspect-[4/3]"
                 />
                 <input value={p.label} onChange={(e) => updatePhoto(i, { label: e.target.value })} className={inputClass} placeholder="Quien es" />

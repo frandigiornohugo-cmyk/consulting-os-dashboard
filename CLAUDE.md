@@ -64,7 +64,7 @@ Estos son los 7 módulos que componen el dashboard. Se construyen en este orden:
 
 7. **Fran Virtual** — Chat de consultor integrado (estilo digitalcoffee.ai). Motor Claude API con `agents/consultant.md` como system prompt. Lee `context/knowledge/` y `context/output/` como base de conocimiento. Aprende de cada conversación (guarda historial, preferencias, contexto).
 
-8. **Estudio de Miniaturas** — Wizard para miniaturas de YouTube ultra realistas (marca personal, B2B, infoproductos, e-commerce): referencia → análisis visual editable → fotos → texto/colores → generación y ajustes por versión. Motor OpenAI (`OPENAI_API_KEY`; análisis con `OPENAI_VISION_MODEL`, generación con `OPENAI_IMAGE_MODEL` en calidad alta e `input_fidelity: high`). Metodología editable en `context/miniaturas/metodologia.md`. Página `src/pages/Thumbnails.jsx`, API `server/routes/thumbnails.js`, prompts en `server/lib/thumbnail-prompt.js`.
+8. **Estudio de Miniaturas** — Wizard para miniaturas de YouTube ultra realistas (marca personal, B2B, infoproductos, e-commerce): referencia → análisis visual editable → fotos → texto/colores → generación y ajustes por versión. Motor OpenAI (`OPENAI_API_KEY`; análisis con `OPENAI_VISION_MODEL`, generación con `OPENAI_IMAGE_MODEL` en calidad alta e `input_fidelity: high`). Base de conocimiento (packaging del SOP + metodología) en `estudio-miniaturas/conocimiento/`, compartida con el proyecto aparte de Claude Code `estudio-miniaturas/`. Página `src/pages/Thumbnails.jsx`, API `server/routes/thumbnails.js`, prompts en `server/lib/thumbnail-prompt.js`.
 
 ---
 

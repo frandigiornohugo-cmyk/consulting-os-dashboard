@@ -1,6 +1,6 @@
 # Metodología de miniaturas ultra realistas
 
-Base de conocimiento del Estudio de Miniaturas. El backend la carga como contexto del análisis de referencias (`server/lib/thumbnail-prompt.js`). Editala para ajustar cómo se analizan y generan las miniaturas: los cambios se aplican en el próximo request, sin reiniciar.
+Base de conocimiento del Estudio de Miniaturas. La usan Claude Code en este proyecto y el backend del dashboard (`server/lib/thumbnail-prompt.js`) junto con `packaging.md`. Editala para ajustar cómo se analizan y generan las miniaturas: los cambios se aplican en el próximo request, sin reiniciar.
 
 ## Principio rector
 
@@ -35,7 +35,7 @@ La miniatura mejora la foto, no la reemplaza. La persona tiene que verse exactam
 ## Texto
 
 - El título se escribe exactamente como se indica, carácter por carácter. Sin traducir, sin agregar palabras.
-- Máximo 2 bloques de texto (título + subtítulo). Si el título supera 4 palabras, pedir versión más corta.
+- Máximo 2 bloques de texto (título + subtítulo). La miniatura completa no pasa de 3-5 elementos (ver `packaging.md`). Si el título supera 4 palabras, pedir versión más corta.
 - Formato numérico tipo resultado: `$20K - $135K`, `0 a 10.000`, `x3 en 60 días`.
 
 ## Por nicho
